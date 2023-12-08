@@ -1,12 +1,23 @@
 const mongoose=require('mongoose')
 
 const userSchema = mongoose.Schema({
-    email: String,
-    phone: String,
+    email: {
+        type:String,
+        required:true,
+        unique:true
+    },
+    phone: {
+        type:String,
+        required:true,
+        unique:true
+    },
     name: String,
     address: String,
-    password: String,
-    userType: { type: String, enum: ['Customer', 'Manager'] },
+    password: {
+        type:String,
+        required:true
+    },
+    userType: { type: String, enum: ['customer', 'manager'],required:true },
 });
 
 const UserModel=mongoose.model("User",userSchema)

@@ -4,7 +4,10 @@ const cors=require('cors')
 const { connectionDB } = require("./db/connection")
 const { userRouter } = require("./routes/userRoute")
 const { productRouter } = require("./routes/productRoute")
+const cookieParser = require("cookie-parser")
 app.use(cors())
+app.use(express.json())
+app.use(cookieParser())
 require('dotenv').config
 const port=process.env.port||8000
 
