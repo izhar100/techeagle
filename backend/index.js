@@ -5,6 +5,7 @@ const { connectionDB } = require("./db/connection")
 const { userRouter } = require("./routes/userRoute")
 const { productRouter } = require("./routes/productRoute")
 const cookieParser = require("cookie-parser")
+const { cartRouter } = require("./routes/cartRoute")
 app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
@@ -13,6 +14,7 @@ const port=process.env.port||8000
 
 app.use("/user",userRouter)
 app.use("/product",productRouter)
+app.use("/cart",cartRouter)
 app.listen(port,async()=>{
   try {
     await connectionDB
