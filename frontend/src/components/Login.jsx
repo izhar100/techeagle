@@ -19,6 +19,7 @@ import { useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { login } from '../redux/authReducer/action'
 import { useNavigate } from 'react-router-dom'
+import useShowToast from '../hooks/useShowToast'
   
   export default function Login({handlePage}) {
     const {loading}=useSelector((store)=>{
@@ -31,12 +32,13 @@ import { useNavigate } from 'react-router-dom'
     const [showPassword,setShowPassword]=useState(false)
     const dispatch=useDispatch()
     const navigate=useNavigate()
-    const handleLogin=async(req,res)=>{
+    const showToast=useShowToast()
+    const handleLogin=()=>{
         const loginData={
             email,password
         }
         dispatch(login(loginData)).then((res)=>{
-            
+            showToast("Success","Login Success!","success")
             if(res.userType=="manager"){
                 navigate("/dashboard")
             }else{

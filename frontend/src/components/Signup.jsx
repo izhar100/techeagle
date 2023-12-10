@@ -16,8 +16,18 @@ import {
     Link,
   } from '@chakra-ui/react'
 import { useState } from 'react'
+import { signUp } from '../redux/authReducer/action'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import useShowToast from '../hooks/useShowToast'
+import { useNavigate } from 'react-router-dom'
   
   export default function Signup({handlePage}) {
+    const {loading,user}=useSelector((store)=>{
+      return {
+        loading:store.authReducer.loading,
+        user:store.authReducer.user
+      }
+    },shallowEqual)
     const [input,setInput]=useState({
         name:"",
         email:"",
@@ -26,10 +36,22 @@ import { useState } from 'react'
         userType:"customer",
         password:""
     })
-    const [loading,setLoading]=useState(false)
     const [showPassword,setShowPassword]=useState(false)
-    const handleSignup=async(req,res)=>{
-        console.log(input)
+    const showToast=useShowToast()
+    const dispatch=useDispatch()
+    const navigate=useNavigate()
+    const handleSignup=()=>{
+    dispatch(signUp(input)).then((res)=>{
+        if(res.error){
+          return showToast("Error",res.error,"error") 
+        }
+        showToast("Success","Account created!","success")
+        if(res.userType=="manager"){
+            navigate("/dashboard")
+        }else{
+            navigate("/")
+        }
+    })
     }
     return (
       <Flex

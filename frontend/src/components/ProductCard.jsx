@@ -4,6 +4,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { AddToCart } from '../redux/cartReducer/action';
+import useShowToast from '../hooks/useShowToast';
 
 const ProductCard = ({product}) => {
     const {token}=useSelector((store)=>{
@@ -13,11 +14,12 @@ const ProductCard = ({product}) => {
     },shallowEqual)
     const navigate=useNavigate()
     const dispatch=useDispatch()
+    const showToast=useShowToast()
 
   const handleAddToCart=(e)=>{
     e.preventDefault()
     if(!token){
-        alert("Please login first!")
+        showToast("Error","Please login first","error")
         navigate("/auth")
     }else{
         const data={
@@ -27,8 +29,13 @@ const ProductCard = ({product}) => {
                 quantity:1
             }
         }
-        console.log(data)
-        dispatch(AddToCart(data))
+        dispatch(AddToCart(data)).then((res)=>{
+          if(res._id){
+            showToast("Success","Product added to cart","success")
+          }else{
+            showToast("Warning",res.error,"warning")
+          }
+        })
     }
     
   }

@@ -4,13 +4,15 @@ import { reducer as authReducer } from "./authReducer/reducer";
 import { reducer as productReducer } from "./productReducer/reducer";
 import { reducer as cartReducer } from "./cartReducer/reducer";
 import { reducer as orderReducer } from "./orderReducer/reducer";
+import { reducer as dashboardOrderReducer } from "./dashboardOrderReducer/reducer";
 import { thunk } from "redux-thunk";
 
 const rootReducer=combineReducers({
    authReducer,
    productReducer,
    cartReducer,
-   orderReducer
+   orderReducer,
+   dashboardOrderReducer
 })
 
 export const store=legacy_createStore(rootReducer,applyMiddleware(thunk))

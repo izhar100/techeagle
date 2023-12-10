@@ -1,4 +1,4 @@
-import { ADD_TO_CART_ERROR, ADD_TO_CART_REQ, ADD_TO_CART_SUCCESS, DEC_QUANTITY, GET_CART_ITEM_SUCCESS, INC_QUANTITY, QUANTITY_REQ } from "./actionType"
+import { ADD_TO_CART_ERROR, ADD_TO_CART_REQ, ADD_TO_CART_SUCCESS, DEC_QUANTITY, DELETE_CART_ITEM, GET_CART_ITEM_SUCCESS, INC_QUANTITY, QUANTITY_REQ } from "./actionType"
 
 const initState={
     loading:false,
@@ -53,6 +53,12 @@ export const reducer=(state=initState,{type,payload})=>{
             })
             return {
                 ...state,loading:false,cart:cartItem
+            }
+        }
+        case DELETE_CART_ITEM:{
+            const cartItem=state.cart.filter((item)=>item._id!==payload)
+            return {
+                ...state,cart:cartItem
             }
         }
         default:{

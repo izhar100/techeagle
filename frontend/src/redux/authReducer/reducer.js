@@ -27,6 +27,14 @@ export const reducer=(state=initState,{type,payload})=>{
                 ...state,loading:false
             }
         }
+        case "LOGOUT":{
+            localStorage.setItem("user","")
+            localStorage.setItem("token","")
+            Cookies.set("token","")
+            return {
+                ...state,token:"",user:{}
+            }
+        }
         default:{
             return {
                 ...state

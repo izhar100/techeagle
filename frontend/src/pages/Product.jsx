@@ -5,6 +5,7 @@ import { Box, Button, Flex, Image, Text } from '@chakra-ui/react'
 import { FaCartShopping } from 'react-icons/fa6'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { AddToCart } from '../redux/cartReducer/action'
+import useShowToast from '../hooks/useShowToast'
 
 const Product = () => {
     const {token}=useSelector((store)=>{
@@ -17,6 +18,7 @@ const Product = () => {
     const [loading, setLoading] = useState(false)
     const navigate=useNavigate()
     const dispatch=useDispatch()
+    const showToast=useShowToast()
     useEffect(() => {
         const getProduct = async (id) => {
             try {
@@ -35,7 +37,7 @@ const Product = () => {
 
     const handleAddToCart=()=>{
         if(!token){
-            alert("Please login first!")
+            showToast("Error","Please login first!","error")
             navigate("/auth")
         }else{
             const data={
@@ -46,7 +48,13 @@ const Product = () => {
                 }
             }
             console.log(data)
-            dispatch(AddToCart(data))
+            dispatch(AddToCart(data)).then((res)=>{
+                if(res._id){
+                    showToast("Success","Product added to cart","success")
+                  }else{
+                    showToast("Warning",res.error,"warning")
+                  }
+            })
         }
     }
     return (
@@ -56,8 +64,8 @@ const Product = () => {
                     p={"20px"} borderRadius={"5px"} cursor={"pointer"}
                     w={{xl:"50%",lg:"50%",md:"50%",sm:"100%",base:"100%"}}
                 >
-                    <Flex justifyContent={"center"} p={"5px"}>
-                        <Image src={product?.image} w={"80%"} borderRadius={"5px"} />
+                    <Flex justifyContent={"center"} p={"20px"} border={"1px solid #bdbdbd"} borderRadius={"10px"} h={{xl:"450px",lg:"450px",md:"400px",sm:"",base:""}}>
+                        <Image src={product?.image} w={"100%"} borderRadius={"5px"} />
                     </Flex>
                 </Box>
                 <Box w={{xl:"50%",lg:"50%",md:"50%",sm:"100%",base:"100%"}}>

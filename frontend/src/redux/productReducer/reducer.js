@@ -1,4 +1,4 @@
-import { GET_PRODUCT_ERROR, GET_PRODUCT_REQ, GET_PRODUCT_SUCCESS } from "./actionType"
+import { DELETE_PRODUCT, GET_PRODUCT_ERROR, GET_PRODUCT_REQ, GET_PRODUCT_SUCCESS } from "./actionType"
 
 const initState={
     loading:false,
@@ -21,6 +21,12 @@ export const reducer=(state=initState,{type,payload})=>{
         case GET_PRODUCT_ERROR:{
             return {
                 ...state,loading:false,product:[]
+            }
+        }
+        case DELETE_PRODUCT:{
+            const product=state.products.filter((item)=>item._id!==payload)
+            return {
+                ...state,products:product
             }
         }
         default:{
