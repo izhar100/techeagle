@@ -16,6 +16,13 @@ const orderSchema = mongoose.Schema({
       enum: ['Pending', 'Processing', 'Shipped', 'Delivered'],
       default: 'Pending',
     },
+    payment:{
+      type:String
+    },
+    totalPrice:Number,
+    deliveryAddress:{
+      type:String
+    }
   });
   
   const OrderModel = mongoose.model('Order', orderSchema);

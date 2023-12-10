@@ -6,9 +6,9 @@ const bcrypt = require('bcrypt')
 const signupUser = async (req, res) => {
     try {
         const { email, phone, name, address, password, userType } = req.body;
-        const user = await UserModel.findOne({ $or: [{ email, phone }] })
+        const user = await UserModel.findOne({email})
         if (user) {
-            return res.status(400).json({ error: "Email or Phone already exists" });
+            return res.status(400).json({ error: "Email already exists" });
         }
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)

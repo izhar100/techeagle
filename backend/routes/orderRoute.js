@@ -7,8 +7,8 @@ const orderRouter=express.Router()
 
 orderRouter.post("/place",auth,placeOrder)
 orderRouter.get("/customer/:customerId",auth,getOrderedItem)
-orderRouter.put("/update/:orderId",protectRoute,updateOrderStatus)
-orderRouter.get("/",getAllOrders)
+orderRouter.patch("/update/:orderId",protectRoute,updateOrderStatus)
+orderRouter.get("/",protectRoute,getAllOrders)
 
 
 module.exports={

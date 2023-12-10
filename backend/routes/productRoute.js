@@ -6,7 +6,7 @@ const productRouter=express.Router()
 productRouter.get("/",getProducts)
 productRouter.get("/:id",getProduct)
 productRouter.post("/add",protectRoute,addProduct)
-productRouter.patch("/update/:id",protectRoute,updateProduct)
+productRouter.put("/update/:id",protectRoute,updateProduct)
 productRouter.delete("/delete/:id",protectRoute,deleteProduct)
 
 

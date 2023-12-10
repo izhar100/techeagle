@@ -4,7 +4,10 @@ const { OrderModel } = require("../models/orderModel");
 const getOrderedItem = async (req, res) => {
     try {
         const customerId = req.params.customerId;
-        const orders = await OrderModel.find({ customerId });
+        const orders = await OrderModel.find({ customerId }).populate({
+          path: 'items.productId',
+          select: '-quantity'
+      });
         res.status(200).json(orders);
       } catch (error) {
         res.status(500).json({ message: error.message });
@@ -14,7 +17,10 @@ const getOrderedItem = async (req, res) => {
 
 const getAllOrders=async(req,res)=>{
     try {
-        const orders=await OrderModel.find()
+        const orders=await OrderModel.find().populate({
+          path: 'items.productId',
+          select: '-quantity'
+      });
         res.status(200).json(orders)
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -23,12 +29,12 @@ const getAllOrders=async(req,res)=>{
 }
 const placeOrder = async (req, res) => {
     try {
-        const { userId, items } = req.body;
-        const order = new OrderModel({ customerId:userId, items });
+        const { userId, items,payment,totalPrice,deliveryAddress } = req.body;
+        const order = new OrderModel({ customerId:userId, items,payment,totalPrice,deliveryAddress });
         await order.save();
-        res.status(200).json({message:"Order placed",order});
+        res.status(200).json({message:"Order placed"});
       } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ error: error.message });
         console.log("Error in placeOrder")
       }
 }
@@ -44,7 +50,7 @@ const updateOrderStatus = async (req, res) => {
           { new: true }
         );
         
-        res.status(200).json({message:"Updated Succefully!",order});
+        res.status(200).json({message:"Updated Succefully!"});
       } catch (error) {
         res.status(500).json({ message: error.message });
       }
