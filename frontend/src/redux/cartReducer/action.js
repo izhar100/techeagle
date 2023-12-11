@@ -28,8 +28,8 @@ export const getCartItem=(token)=>async(dispatch)=>{
             }
         })
         const data=await res.json()
-        console.log(data)
         dispatch({type:GET_CART_ITEM_SUCCESS,payload:data.items})
+        return data;
         
     } catch (error) {
         console.log(error)

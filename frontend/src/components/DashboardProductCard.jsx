@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { FaCartShopping } from "react-icons/fa6";
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -17,14 +17,17 @@ const DashboardProductCard = ({ product }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const showToast=useShowToast()
+    const [loading,setLoading]=useState(false)
 
     const handleDelete = (e) => {
+        setLoading(true)
         dispatch(deleteProduct({token,id:product._id})).then((res)=>{
             if(res.message){
               showToast("Success",res.message,"success")
             }else{
               showToast("Error",res.error,"error")  
             }
+            setLoading(false)
         })
     }
     const handleEdit=()=>{
@@ -54,7 +57,7 @@ const DashboardProductCard = ({ product }) => {
                         <EditIcon />
                         <Text>Edit</Text>
                     </Button>
-                    <Button colorScheme='red' display={"flex"} alignItems={"center"} gap={"10px"} onClick={handleDelete}
+                    <Button colorScheme='red' display={"flex"} alignItems={"center"} gap={"10px"} onClick={handleDelete} isLoading={loading}
                     >
                         <DeleteIcon />
                         <Text>Delete</Text>

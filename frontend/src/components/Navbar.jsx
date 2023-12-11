@@ -1,19 +1,15 @@
-import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Image, Text } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { FaCartShopping } from "react-icons/fa6";
-import { AddIcon, HamburgerIcon } from '@chakra-ui/icons';
+import { HamburgerIcon } from '@chakra-ui/icons';
 import { logout } from '../redux/authReducer/action';
 import {
   Menu,
   MenuButton,
   MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
+  MenuItem
 } from '@chakra-ui/react'
 
 const Navbar = () => {
@@ -37,7 +33,7 @@ const Navbar = () => {
     <>
       <Flex p={"8px"} justifyContent={"space-between"} alignItems={"center"}>
         <Flex justifyContent={"center"} alignItems={"center"}>
-          <Heading onClick={() => navigate("/")} cursor={"pointer"}>TechEagle</Heading>
+          <Image src='https://assets-global.website-files.com/6284afcd3c8fe34dca52d136/62bfd7e69c25897f423bcdac_TechEagle%20new%20logo.svg' onClick={() => navigate("/")} h={{xl:"40px",lg:"40px",md:"40px",sm:"30px",base:"30px"}} cursor={"pointer"}/>
         </Flex>
         <Flex alignItems={"center"} gap={"20px"}>
           {

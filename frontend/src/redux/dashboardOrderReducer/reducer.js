@@ -10,12 +10,12 @@ export const reducer=(state=initState,{type,payload})=>{
     switch(type){
         case GET_ALL_ORDER_REQ:{
             return {
-                ...state,loading:false
+                ...state,loading:true
             }
         }
         case GET_ALL_ORDER_SUCCESS:{
             return {
-                ...state,allOrders:payload
+                ...state,loading:false,allOrders:payload
             }
         }
         case GET_ALL_ORDER_ERR:{
