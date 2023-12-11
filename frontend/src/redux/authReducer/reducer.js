@@ -28,8 +28,8 @@ export const reducer=(state=initState,{type,payload})=>{
             }
         }
         case "LOGOUT":{
-            localStorage.setItem("user","")
-            localStorage.setItem("token",JSON.stringify({}))
+            localStorage.setItem("user",JSON.stringify({}))
+            localStorage.setItem("token","")
             Cookies.set("token","")
             return {
                 ...state,token:"",user:{}
