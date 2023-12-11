@@ -13,6 +13,7 @@ export const getAllOrders=(token)=>async(dispatch)=>{
         })
         const result=await res.json()
         dispatch({type:GET_ALL_ORDER_SUCCESS,payload:result})
+        return result
     } catch (error) {
         console.log(error)
         dispatch({type:GET_ALL_ORDER_ERR})
